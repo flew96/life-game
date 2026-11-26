@@ -71,15 +71,15 @@ dotnet test tests/GameOfLife.Tests
 ### Выпуск новой версии
 
 Сборка и тесты запускаются GitHub Actions на каждый push и pull request.
-Чтобы опубликовать релиз с exe-файлом, достаточно отправить тег вида `vX.Y.Z`:
+Релиз с exe-файлом можно выпустить двумя способами:
 
-```bash
-git tag v2.0.1
-```
+- **Через сайт:** вкладка *Actions* → *Build* → *Run workflow*, в поле *release* укажите версию
+  (например `2.0.1`) → *Run workflow*. Тег и релиз создадутся автоматически.
+- **Через git:** отправьте тег вида `vX.Y.Z`:
 
-```bash
-git push origin v2.0.1
-```
+  ```bash
+  git tag v2.0.1 && git push origin v2.0.1
+  ```
 
 ## Структура проекта
 
