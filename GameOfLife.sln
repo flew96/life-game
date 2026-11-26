@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E1463201-B199-4508-BA06-12F1B1BA090C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife", "src\GameOfLife\GameOfLife.csproj", "{F9D1754B-4D1B-4156-85AF-9C68BC52C6F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AE5E4DF5-0421-4046-97DC-AED8337C4F8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife.Tests", "tests\GameOfLife.Tests\GameOfLife.Tests.csproj", "{DE1C3136-E3D0-4699-85DC-0D438FDA24D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9D1754B-4D1B-4156-85AF-9C68BC52C6F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9D1754B-4D1B-4156-85AF-9C68BC52C6F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9D1754B-4D1B-4156-85AF-9C68BC52C6F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9D1754B-4D1B-4156-85AF-9C68BC52C6F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE1C3136-E3D0-4699-85DC-0D438FDA24D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE1C3136-E3D0-4699-85DC-0D438FDA24D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE1C3136-E3D0-4699-85DC-0D438FDA24D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE1C3136-E3D0-4699-85DC-0D438FDA24D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F9D1754B-4D1B-4156-85AF-9C68BC52C6F1} = {E1463201-B199-4508-BA06-12F1B1BA090C}
+		{DE1C3136-E3D0-4699-85DC-0D438FDA24D0} = {AE5E4DF5-0421-4046-97DC-AED8337C4F8D}
+	EndGlobalSection
+EndGlobal

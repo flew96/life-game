@@ -1,0 +1,79 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test
+        run: dotnet test tests/GameOfLife.Tests -c Release
+
+      - name: Version
+        id: version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=0.0.0-ci.${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build GameOfLife.exe
+        run: dotnet build src/GameOfLife -c Release -o publish -p:Version=${{ steps.version.outputs.value }}
+
+      - name: Package
+        run: |
+          mkdir -p dist/GameOfLife
+          cp publish/GameOfLife.exe publish/GameOfLife.exe.config dist/GameOfLife/
+          cp README.md LICENSE game_of_life_console.py dist/GameOfLife/
+          cp publish/GameOfLife.exe dist/
+          (cd dist && 7z a -tzip GameOfLife-${{ steps.version.outputs.value }}-windows.zip GameOfLife > /dev/null)
+          rm -rf dist/GameOfLife
+          (cd dist && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt)
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GameOfLife-windows
+          path: dist/
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: GameOfLife-windows
+          path: dist
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sed "s/{{TAG}}/$GITHUB_REF_NAME/g" .github/release-notes.md > notes.md
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --title "Game of Life $GITHUB_REF_NAME" \
+            --notes-file notes.md \
+            --verify-tag
